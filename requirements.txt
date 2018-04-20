@@ -1,0 +1,15 @@
+beautifulsoup4==4.6.0
+certifi==2018.1.18
+chardet==3.0.4
+Django==1.11.12
+html5lib==1.0.1
+idna==2.6
+lxml==4.2.1
+mechanize==0.3.6
+psycopg2==2.7.4
+pyPdf==1.13
+pytz==2018.4
+requests==2.18.4
+six==1.11.0
+urllib3==1.22
+webencodings==0.5.1
