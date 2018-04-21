@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^student/', profile),
     url(r'^course_search/', course_search),
     url(r'^course/', course_disp),
+    url(r'^inter/', course_inter),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

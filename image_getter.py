@@ -1,7 +1,7 @@
 from main.models import *
 import requests
 
-file_path = "./static/photos/"
+file_path = "./main/static/photos/"
 
 def get():
     get_url = "https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/%s_0.jpg"

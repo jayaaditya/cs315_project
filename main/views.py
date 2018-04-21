@@ -136,6 +136,59 @@ def course_disp(request):
             'previous': previous_page,
             }
     return render(request,'course_profile.html', context)
+def course_inter(request):
+    page = 1
+    pagenos = []
+    next_page = "#"
+    previous_page = "#"
+    page_bool = False
+    cards = []
+    try:
+        page = int(request.GET['page'])
+    except:
+        pass
+    try:
+        query = request.GET['query'].split(',')
+        query = map(lambda x: x.strip(), query)
+        print query
+    except:
+        return HttpResponseRedirect('/')
+    code1 = query.pop(0)
+    e = enrolled.objects.select_related('rollno').filter(
+            ccode__in = course.objects.filter(code__icontains = code1)
+            )
+    set_of_stud = set(map(lambda x: x.rollno.rollno, e))
+    for x in query:
+        e = enrolled.objects.select_related('rollno').filter(
+                ccode__in = course.objects.filter(code__icontains = x)
+                )
+        set_of_stud &= set(map(lambda x: x.rollno.rollno, e))
+    final_query = student.objects.filter(rollno__in = list(set_of_stud)).order_by('rollno')
+    try:
+        rows = Paginator(final_query, 8)
+        row = rows.page(page)
+        pagenos = [x for x in range(page,min(page+3,row.end_index()+1))]
+        page_bool = True
+        if row.has_next():
+            next_page = "/inter/?query=%s&page=%s" %(query, str(row.next_page_number()))
+        else:
+            pagenos = [page]
+        if row.has_previous():
+            previous_page = "/inter/?query=%s&page=%s" %(query, str(row.previous_page_number()))
+        print row.end_index()
+        cards = row.object_list
+    except:
+        row = []
+    query = request.GET['query']
+    context = {
+            'row' : cards, 
+            'page_bool':page_bool, 
+            'pagenos':pagenos,
+            'next': next_page,
+            'previous': previous_page,
+            'query': query
+            }
+    return render(request, 'inter.html', context)
 
 def main(request):
     return render(request, 'main.html')

@@ -31,16 +31,22 @@
     <!-- Page Content -->
     <div class="container" id="main_container">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
+          <form action="/search/">
+            <label>Student Search:</label>
+          <input type="search" id="search" value="" class="form-control" name="query" placeholder="Enter Roll No. or Name">
+          </form>
+        </div>
+        <div class="col-md-4">
           <form action="/course_search/">
             <label>Course Search:</label>
           <input type="search" id="search" value="" class="form-control" name="query" placeholder="Enter Course Title or Code">
           </form>
         </div>
-        <div class="col-md-6">
-          <form action="/search/">
-            <label>Student Search:</label>
-          <input type="search" id="search" value="" class="form-control" name="query" placeholder="Enter Roll No. or Name">
+        <div class="col-md-4">
+          <form action="/inter/">
+            <label>Course Intersection Search:</label>
+          <input type="search" id="search" value="" class="form-control" name="query" placeholder="Enter course codes, comma separated">
           </form>
         </div>
       </div>
