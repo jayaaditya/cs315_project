@@ -27,14 +27,10 @@ def search_res(request):
         final_query = (queryset1 | queryset2).distinct().order_by('rollno')
         rows = Paginator(final_query, 8)
         row = rows.page(page)
-        pagenos = [x for x in range(page,min(page+3,row.end_index()+1))]
+        pagenos = [x for x in range(max(1,page-1),min(page+2,rows.num_pages + 1))]
         page_bool = True
-        if row.has_next():
-            next_page = "/search/?query=%s&page=%s" %(query, str(row.next_page_number()))
-        else:
-            pagenos = [page]
-        if row.has_previous():
-            previous_page = "/search/?query=%s&page=%s" %(query, str(row.previous_page_number()))
+        next_page = "/search/?query=%s&page=%s" %(query, str(rows.num_pages))
+        previous_page = "/search/?query=%s&page=1" %(query)
         print row.end_index()
         cards = row.object_list
     except:
@@ -86,13 +82,9 @@ def course_search(request):
         rows = Paginator(course_list, 50)
         row = rows.page(page)
         page_bool = True
-        pagenos = [x for x in range(page,min(page+3,row.end_index()+1))]
-        if row.has_next():
-            next_page = "/course_search/?query=%s&page=%s" %(query, str(row.next_page_number()))
-        else:
-            pagenos = [page]
-        if row.has_previous():
-            previous_page = "/course_search/?query=%s&page=%s" %(query, str(row.previous_page_number()))
+        pagenos = [x for x in range(max(1,page-1),min(page+2,rows.num_pages + 1))]
+        next_page = "/course_search/?query=%s&page=%s" %(query, str(rows.num_pages))
+        previous_page = "/course_search/?query=%s&page=1" %(query)
         context = {
                 'courses' : row.object_list, 
                 'page_bool':page_bool, 
@@ -107,8 +99,6 @@ def course_search(request):
 
 def course_disp(request):
     page=1
-    next_page = "#"
-    previous_page = "#"
     try:
         page = int(request.GET['page'])
     except:
@@ -121,13 +111,9 @@ def course_disp(request):
     enrolled_list = enrolled.objects.filter( ccode = course_obj).order_by('acad_year','semester','rollno_id')
     rows = Paginator(enrolled_list, 100)
     row = rows.page(page)
-    pagenos = [x for x in range(page,min(page+3,row.end_index()))]
-    if row.has_next():
-        next_page = "/course/?code=%s&page=%s" %(course_obj.code, str(row.next_page_number()))
-    else:
-        pagenos = [page]
-    if row.has_previous():
-        previous_page = "/course/?code=%s&page=%s" %(course_obj.code, str(row.previous_page_number()))
+    pagenos = [x for x in range(max(1,page-1),min(page+2,rows.num_pages + 1))]
+    next_page = "/course/?code=%s&page=%s" %(code, str(rows.num_pages))
+    previous_page = "/course/?code=%s&page=1" %(code)
     context = {
             'course' : course_obj,
             'enrolled':row.object_list,
@@ -165,21 +151,17 @@ def course_inter(request):
         set_of_stud &= set(map(lambda x: x.rollno.rollno, e))
     final_query = student.objects.filter(rollno__in = list(set_of_stud)).order_by('rollno')
     try:
+        query = request.GET['query']
         rows = Paginator(final_query, 8)
         row = rows.page(page)
-        pagenos = [x for x in range(page,min(page+3,row.end_index()+1))]
+        pagenos = [x for x in range(max(1,page-1),min(page+2,rows.num_pages + 1))]
         page_bool = True
-        if row.has_next():
-            next_page = "/inter/?query=%s&page=%s" %(query, str(row.next_page_number()))
-        else:
-            pagenos = [page]
-        if row.has_previous():
-            previous_page = "/inter/?query=%s&page=%s" %(query, str(row.previous_page_number()))
-        print row.end_index()
+        next_page = "/inter/?query=%s&page=%s" %(query, str(rows.num_pages))
+        print rows.num_pages
+        previous_page = "/inter/?query=%s&page=1" %(query)
         cards = row.object_list
     except:
         row = []
-    query = request.GET['query']
     context = {
             'row' : cards, 
             'page_bool':page_bool, 

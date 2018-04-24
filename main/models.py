@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models.indexes import Index
 
 # Create your models here.
 year_str = "20%02d-%02d"
@@ -9,7 +10,7 @@ YEAR_CHOICES = [(year_str %(x,x+1), year_str %(x,x+1)) for x in range(6,18)]
 SEM_CHOICES = [(x,x) for x in range(1,4)]
 
 class department(models.Model):
-    code = models.CharField(max_length = 5, primary_key = True)
+    code = models.CharField(db_index = True, max_length = 5, primary_key = True)
     name = models.CharField(max_length = 20, blank = True)
 
     def __unicode__(self):
@@ -21,6 +22,12 @@ class course(models.Model):
     dept = models.ForeignKey(department)
     desc = models.TextField()
 
+    class Meta:
+        indexes = [
+                Index(fields = ['code']),
+                Index(fields = ['title']),
+                ]
+
     def __unicode__(self):
         return self.code
 
@@ -29,6 +36,12 @@ class student(models.Model):
     dept = models.ForeignKey(department, blank = True, default = None)
     name = models.CharField(max_length = 20)
     program = models.CharField(max_length = 10)
+
+    class Meta:
+        indexes = [
+                Index(fields = ['rollno']),
+                Index(fields = ['name']),
+                ]
 
 class enrolled(models.Model):
     rollno = models.ForeignKey(student)
@@ -39,4 +52,7 @@ class enrolled(models.Model):
     
     class Meta:
         unique_together = (('rollno','acad_year','semester','ccode'),)
-
+        indexes = [
+                Index(fields = ['rollno']),
+                Index(fields = ['ccode']),
+                ]
