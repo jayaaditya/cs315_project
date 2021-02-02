@@ -4,7 +4,7 @@ arandr==0.1.9
 backports.functools-lru-cache==1.5
 backports.weakref==1.0.post1
 beautifulsoup4==4.6.0
-bleach==1.5.0
+bleach==3.3.0
 certifi==2018.1.18
 chardet==3.0.4
 cycler==0.10.0
