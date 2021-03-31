@@ -4,7 +4,7 @@ chardet==3.0.4
 Django==1.11.12
 html5lib==1.0.1
 idna==2.6
-lxml==4.2.1
+lxml==4.6.3
 mechanize==0.3.6
 psycopg2==2.7.4
 pyPdf==1.13
