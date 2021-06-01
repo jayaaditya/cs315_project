@@ -37,7 +37,7 @@ subprocess32==3.2.7
 team==1.0
 tensorflow-gpu==1.5.0
 tensorflow-tensorboard==1.5.1
-urllib3==1.22
+urllib3==1.26.5
 virtualenv==15.1.0
 webencodings==0.5.1
 websocket-client==0.47.0
