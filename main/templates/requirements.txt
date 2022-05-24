@@ -35,7 +35,7 @@ sexpdata==0.0.3
 six==1.11.0
 subprocess32==3.2.7
 team==1.0
-tensorflow-gpu==1.5.0
+tensorflow-gpu==2.6.4
 tensorflow-tensorboard==1.5.1
 urllib3==1.22
 virtualenv==15.1.0
